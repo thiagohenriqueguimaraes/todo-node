@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TodoNode</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+  <section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+    <input class="new-todo" id="new-todo"
+      autofocus autocomplete="off"
+      placeholder="O que precisa ser feito?">
+  </header>
+  <section class="main" v-show="todos.length" v-cloak>
+    <input class="toggle-all" type="checkbox" v-model="allDone">
+    <ul class="todo-list">
+      <li v-for="todo in filteredTodos"
+        class="todo"
+        :key="todo.id"
+        :class="{ completed: todo.completed, editing: todo == editedTodo }">
+        <div class="view">
+          <input class="toggle" type="checkbox" v-model="todo.completed">
+          <label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+          <button class="destroy" @click="removeTodo(todo)"></button>
+        </div>
+        <input class="edit" id="edit" type="text">
+      </li>
+    </ul>
+  </section>
+  <footer class="footer" v-show="todos.length" v-cloak>
+    <span class="todo-count">
+      <strong>{{ remaining }}</strong> {{ remaining | pluralize }} left
+    </span>
+    <ul class="filters">
+      <li><a href="#/all" :class="{ selected: visibility == 'all' }">All</a></li>
+      <li><a href="#/active" :class="{ selected: visibility == 'active' }">Active</a></li>
+      <li><a href="#/completed" :class="{ selected: visibility == 'completed' }">Completed</a></li>
+    </ul>
+    <button class="clear-completed" @click="removeCompleted" v-show="todos.length > remaining">
+      Clear completed
+    </button>
+  </footer>
+</section>
+<footer class="info">
+  <p>Clique duas vezes para editar para todos</p>
+  <p>Escrito por <a href="http://thiagohenriqueguimaraes.me">Thiago</a></p>
+  <p>Part of <a href="http://todomvc.com">TodoNode</a></p>
+</footer>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="todoNode.js"></script>
+</body>
+</body>
+</html>
