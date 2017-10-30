@@ -10,3 +10,31 @@ http.createServer(function (req, res) {
     res.end();
   });
 }).listen(8080);
+
+
+else if (req.url === '/removeTodo' && req.method === 'POST') {
+    	console.log('/removeTodo')
+        var body = '';
+        req.on('data', function (data) {
+            body += data;
+        }).on('end', function () {
+            var todo = JSON.parse(body);
+            if (!todo || todo.id === "") {
+                var response = {
+                    status  : 500,
+                    success : 'Erro'
+                };
+                res.end(JSON.stringify(response));
+            } else {
+                todos = todos.filter(function(el) {
+                    return el.id !== todo.id;
+                });
+
+                var response = {
+                    status  : 200,
+                    success : 'Updated Successfully'
+                };
+                res.end(JSON.stringify(response));
+            }
+        })
+    }
